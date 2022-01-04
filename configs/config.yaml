@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - dataprep: prepare.yaml
+  - override hydra/hydra_logging: colorlog
+  - override hydra/job_logging: colorlog
+
+work_dir: ${hydra:runtime.cwd}
+data_root : ${work_dir}/data/
