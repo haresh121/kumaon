@@ -1,4 +1,4 @@
-from ...utils.text_clean import filter_long_short, fix_bad_token, filter_bad_tag
+from ..utils.text_clean import filter_long_short, fix_bad_token, filter_bad_tag
 import datasets
 from pathlib import Path
 
