@@ -1,0 +1,15 @@
+DATA_ROOT: ./data  # Task: should be removed in the next commit
+
+ende:
+  downloand_cmd: "mtdata signature used to download and organize data into RAW."
+  data_files : 
+      en: RAW/en/train.ori.src
+      de: RAW/de/train.ori.tgt
+  sample_by : paragraph
+
+tanzil:
+  downloand_cmd: "mtdata signature used to download and organize data into RAW."
+  data_files : 
+      en1: RAW/en1/train.ori.src
+      en2: RAW/en2/train.ori.tgt
+  sample_by : paragraph
