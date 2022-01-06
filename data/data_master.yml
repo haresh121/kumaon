@@ -1,7 +1,7 @@
 # DATA_ROOT is the parent dir that contains data subfolders.
 # DATA_KEY is also the dir name that contains the data_files below.
 
-DATA_ROOT: /home/ubuntu/out/kumaon/data/  # Task: should be removed in the next commit
+DATA_ROOT: /Users/haresh/Haresh/projects/kumaon/data/  # Task: should be removed in the next commit
 
 ende: # DATA_KEY
   downloand_cmd: "mtdata signature used to download and organize data into RAW."
@@ -13,6 +13,6 @@ ende: # DATA_KEY
 tanzil:
   downloand_cmd: "mtdata signature used to download and organize data into RAW."
   data_files : 
-      en1: RAW/en1/train.ori.src
-      en2: RAW/en2/train.ori.tgt
+      en1: RAW/train.ori.src
+      en2: RAW/train.ori.pe
   sample_by : paragraph

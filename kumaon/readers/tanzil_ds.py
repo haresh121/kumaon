@@ -28,6 +28,7 @@ class Tanzil(object):
         self.conf = OmegaConf.load(self.data_master)
         self.data_dir = str( Path(self.conf.DATA_ROOT, data_key) )
         self.target_dir = Path(self.data_dir, self.version_str)
+        print(self.target_dir)
         self.write_mode = write_mode
         # read from source, flow through maps and write if required
         self.read_flow_write()
