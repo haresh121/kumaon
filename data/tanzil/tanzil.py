@@ -11,12 +11,12 @@ logger = datasets.utils.logging.get_logger(__name__)
 
 from omegaconf import OmegaConf
 from pathlib import Path
-DATA_MASTER_PATH = '/Users/haresh/Haresh/projects/kumaon/data/data_master.yml' # need to change the path
-if not Path(DATA_MASTER_PATH).exists():
-    raise FileNotFoundError( f'Data master yaml {DATA_MASTER_PATH} not found.' )
-data_params = OmegaConf.load(DATA_MASTER_PATH)['tanzil']
+import builtins
 
-print(data_params.data_files)
+master_conf = OmegaConf.load(builtins.DATA_MASTER_PATH)
+data_params, DATA_ROOT = master_conf[builtins.DATA_KEY], master_conf['DATA_ROOT']
+make_path_absolute = lambda d: { k:Path(DATA_ROOT, builtins.DATA_KEY, v) for (k,v) in d.items() }
+
 
 class TextConfig(datasets.BuilderConfig):
     """BuilderConfig for text files."""
@@ -25,9 +25,9 @@ class TextConfig(datasets.BuilderConfig):
         self.name = "tanzil"
         self.encoding: str = "utf-8"
         self.chunksize: int = 10 << 20  # 10MB
-        self.data_files = dict(data_params.data_files)
+        self.data_files = make_path_absolute(data_params.data_files)
         self.keep_linebreaks: bool = False
-        self.sample_by: str = str(data_params.sample_by)
+        self.sample_by: str = data_params.sample_by
 
 
 class Text(datasets.ArrowBasedBuilder):

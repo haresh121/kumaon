@@ -1,28 +1,50 @@
 from ..utils.text_clean import filter_long_short, fix_bad_token, filter_bad_tag
 import datasets
 from pathlib import Path
+import builtins
+from omegaconf import OmegaConf
 
 class Tanzil(object):
-    def __init__( self, version_str, data_dir, write_mode=False ):
-        
+    '''
+    Sample usage:
+        from kumaon.readers.tanzil_ds import Tanzil
+        ende = EnDe(version_str='BASIC_CLEANING', 
+                    data_master='/home/ubuntu/out/kumaon/data/data_master.yml', 
+                    data_key='tanzil',
+                    write_mode=True)
+    '''
+    def __init__( self, version_str, data_master, data_key, write_mode=False ):
+        # version and fn
         self.version_str = version_str
-        self.data_dir = data_dir
+        self.Version2Flow_Mapping = self.get_version2flow_mapping(self.version_str)
+        assert version_str in self.Version2Flow_Mapping.keys()
+        # data master and config
+        self.data_master = Path(data_master)
+        assert ( self.data_master.is_absolute() and self.data_master.exists() )
+        builtins.DATA_MASTER_PATH = self.data_master
+        self.data_key = data_key
+        builtins.DATA_KEY = self.data_key
+        # data and target dir
+        self.conf = OmegaConf.load(self.data_master)
+        self.data_dir = str( Path(self.conf.DATA_ROOT, data_key) )
+        self.target_dir = Path(self.data_dir, self.version_str)
         self.write_mode = write_mode
-        self.download_cmd = ''
-
-        self.Version2Flow_Mapping = {
-            'BASIC_CLEANING' : self.writerevision_basic_cleaning
-        }
-
-        self.target_dir = Path(self.data_dir, version_str)
+        # read from source, flow through maps and write if required
+        self.read_flow_write()
+    
+    def read_flow_write(self):
         if not self.write_mode :
             if not self.target_dir.exists() :
                 raise ValueError(f'Path {self.target_dir} does not exist for reading.')
             self.dataset = datasets.load_from_disk( self.target_dir )
-        else : # writing data to disk
-            
-            flow_executor = self.Version2Flow_Mapping[version_str]
+        else : # writing data to disk            
+            flow_executor = self.Version2Flow_Mapping[self.version_str]
             self.dataset =  flow_executor( self.data_dir, self.target_dir )
+
+    def get_version2flow_mapping(self, version_str):
+        return {
+            'BASIC_CLEANING' : self.writerevision_basic_cleaning
+        }
 
     def writerevision_basic_cleaning( self, source_dir, target_dir ):
         # read dataset
