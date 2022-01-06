@@ -1,8 +1,0 @@
-# @package _global_
-
-defaults:
-  - _self_
-  - dataprep: prepare.yaml
-
-work_dir: ${hydra:runtime.cwd}
-data_root : ${work_dir}/data/
