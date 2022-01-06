@@ -1,17 +1,19 @@
 # DATA_ROOT is the parent dir that contains data subfolders.
 # DATA_KEY is also the dir name that contains the data_files below.
 
-DATA_ROOT: /Users/haresh/Haresh/projects/kumaon/data/  # Task: should be removed in the next commit
+DATA_ROOT: /Users/haresh/Haresh/projects/kumaon/data/
 
 ende: # DATA_KEY
-  downloand_cmd: "mtdata signature used to download and organize data into RAW."
+  downloand_cmd: "mtdata get -l deu-eng --out ende/RAW/ --merge \
+     --train Statmt-europarl-10-deu-eng Statmt-news_commentary-16-deu-eng \
+     --dev Statmt-newstest_deen-2017-deu-eng  --test Statmt-newstest_deen-20{18,19,20}-deu-eng"
   data_files : 
       en: RAW/train.ori.src
       de: RAW/train.ori.pe
   sample_by : paragraph
 
 tanzil:
-  downloand_cmd: "mtdata signature used to download and organize data into RAW."
+  downloand_cmd: "wget https://object.pouta.csc.fi/OPUS-Tanzil/v1/moses/en-en.txt.zip -P tanzil/RAW/"
   data_files : 
       en1: RAW/train.ori.src
       en2: RAW/train.ori.pe
