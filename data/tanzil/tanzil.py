@@ -26,7 +26,6 @@ class TextConfig(datasets.BuilderConfig):
         self.encoding: str = "utf-8"
         self.chunksize: int = 10 << 20  # 10MB
         self.data_files = dict(data_params.data_files)
-        print(self.data_files)
         self.keep_linebreaks: bool = False
         self.sample_by: str = str(data_params.sample_by)
 

@@ -3,6 +3,7 @@ from typing import Optional
 import pyarrow as pa
 import datasets
 import re
+import os
 
 logger = datasets.utils.logging.get_logger(__name__)
 
@@ -23,10 +24,6 @@ class TextConfig(datasets.BuilderConfig):
         self.encoding: str = "utf-8"
         self.chunksize: int = 10 << 20  # 10MB
         self.data_files = data_params.data_files
-        # self.data_files = {
-        #     'en': '/anx/nlp/dat/ende/en/train.ori.pe',
-        #     'de': '/anx/nlp/dat/ende/de/train.ori.src',
-        # }
         self.keep_linebreaks: bool = False
         self.sample_by: str = data_params.sample_by
 
