@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import List, Optional, Union
 
 import pandas as pd
@@ -27,11 +28,11 @@ _PANDAS_READ_CSV_NEW_1_3_0_PARAMETERS = ["encoding_errors", "on_bad_lines"]
 class CsvConfig(datasets.BuilderConfig):
     """BuilderConfig for CSV."""
 
-    sep: str = "\t"
+    sep: str = ","
     delimiter: Optional[str] = None
     header: Optional[Union[int, List[int], str]] = 0
-    names: Optional[List[str]] = None
-    column_names: Optional[List[str]] = "Quality	#1 ID	#2 ID	#1 String	#2 String".split("\t")
+    names: Optional[List[str]] = ["Sentiment", "Sentence"]
+    column_names: Optional[List[str]] = None
     index_col: Optional[Union[int, str, List[int], List[str]]] = None
     usecols: Optional[Union[List[int], List[str]]] = data_params.use_cols if type(data_params.use_cols) == list else None
     prefix: Optional[str] = None
@@ -56,8 +57,8 @@ class CsvConfig(datasets.BuilderConfig):
     comment: Optional[str] = None
     encoding: Optional[str] = None
     dialect: Optional[str] = None
-    error_bad_lines: bool = False
-    warn_bad_lines: bool = False
+    error_bad_lines: bool = True
+    warn_bad_lines: bool = True
     skipfooter: int = 0
     doublequote: bool = True
     memory_map: bool = False
@@ -65,10 +66,10 @@ class CsvConfig(datasets.BuilderConfig):
     chunksize: int = 10_000
     features: Optional[datasets.Features] = None
     encoding_errors: Optional[str] = "strict"
-    on_bad_lines: Literal["error", "warn", "skip"] = "skip"
+    on_bad_lines: Literal["error", "warn", "skip"] = "error"
     
     def __init__(self, **kwargs):
-        self.name = "mrpc"
+        self.name = "yelp-sentiment"
         self.data_files = make_path_absolute(data_params.data_files)
 
     def __post_init__(self):

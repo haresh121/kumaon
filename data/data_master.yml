@@ -44,3 +44,10 @@ quora:
     data_files:
         train: RAW/train.tsv
     use_cols: [question1, question2, is_duplicate]
+
+yelp: 
+    download_cmd: "https://www.kaggle.com/yelp-dataset/yelp-dataset"
+    data_files:
+        train: RAW/train.csv
+        test: RAW/test.csv
+    use_cols: all
