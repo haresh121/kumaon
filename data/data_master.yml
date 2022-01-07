@@ -1,20 +1,46 @@
 # DATA_ROOT is the parent dir that contains data subfolders.
 # DATA_KEY is also the dir name that contains the data_files below.
 
+# sample_by - ['line', 'paragraph', 'document']
+
+# use sample_by if the files passed are .txt files.
+# use use_cols if the files passed are passing csv, tsv or json files.
+
 DATA_ROOT: /Users/haresh/Haresh/projects/kumaon/data/
 
 ende: # DATA_KEY
-  downloand_cmd: "mtdata get -l deu-eng --out ende/RAW/ --merge \
-     --train Statmt-europarl-10-deu-eng Statmt-news_commentary-16-deu-eng \
-     --dev Statmt-newstest_deen-2017-deu-eng  --test Statmt-newstest_deen-20{18,19,20}-deu-eng"
-  data_files : 
-      en: RAW/train.ori.src
-      de: RAW/train.ori.pe
-  sample_by : paragraph
+    downloand_cmd: "mtdata get -l deu-eng --out ende/RAW/ --merge \
+        --train Statmt-europarl-10-deu-eng Statmt-news_commentary-16-deu-eng \
+        --dev Statmt-newstest_deen-2017-deu-eng  --test Statmt-newstest_deen-20{18,19,20}-deu-eng"
+    data_files : 
+        en: RAW/train.ori.src
+        de: RAW/train.ori.pe
+    sample_by : paragraph
 
 tanzil:
-  downloand_cmd: "wget https://object.pouta.csc.fi/OPUS-Tanzil/v1/moses/en-en.txt.zip -P tanzil/RAW/"
-  data_files : 
-      en1: RAW/train.ori.src
-      en2: RAW/train.ori.pe
-  sample_by : paragraph
+    downloand_cmd: "wget https://object.pouta.csc.fi/OPUS-Tanzil/v1/moses/en-en.txt.zip -P tanzil/RAW/"
+    data_files : 
+        en1: RAW/train.ori.src
+        en2: RAW/train.ori.pe
+    sample_by : paragraph
+
+mrpc: 
+    download_cmd: "wget https://dl.fbaipublicfiles.com/senteval/senteval_data/{msr_paraphrase_train.txt, msr_paraphrase_test.txt} -P mrpc/RAW/"
+    data_files :
+        train: RAW/msr_paraphrase_train.tsv
+        test: RAW/msr_paraphrase_test.tsv
+    use_cols: ["#1 String", "#2 String", "Quality"]
+
+mlpara:
+    download_cmd: "wget https://home.ttic.edu/~wieting/mlpara.zip -P mlpara/RAW/"
+    data_files: 
+        jn: RAW/bigrams_jn.tsv
+        nn: RAW/bigrams_nn.tsv
+        vn: RAW/bigrams_vn.tsv
+    use_cols: all
+
+quora:
+    download_cmd: "wget http://qim.fs.quoracdn.net/quora_duplicate_questions.tsv -P quora/RAW/"
+    data_files:
+        train: RAW/train.tsv
+    use_cols: [question1, question2, is_duplicate]

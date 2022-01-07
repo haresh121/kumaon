@@ -37,3 +37,15 @@ def filter_long_short(sent, _min=1, _max=128):
     if _min <= len(sent) <= _max:
         return True
     return False
+
+def filter_invalid_sent(s):
+    '''
+    Returns True if s does have any Null values in it, else False.
+    '''
+    val = []
+    for i in s:
+        if s[i] == None:
+            val.append(False)
+        else:
+            val.append(True)
+    return all(val)
