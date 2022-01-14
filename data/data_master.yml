@@ -16,6 +16,8 @@ ende: # DATA_KEY
         en: RAW/train.ori.src
         de: RAW/train.ori.pe
     sample_by : paragraph
+    description:
+        keywords: translation, german-english
 
 tanzil:
     downloand_cmd: "wget https://object.pouta.csc.fi/OPUS-Tanzil/v1/moses/en-en.txt.zip -P tanzil/RAW/"
