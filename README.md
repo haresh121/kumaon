@@ -34,3 +34,20 @@ The optimal file directory structure will be as follows:
 |-- README.md
 |-- .gitignore
 ```
+
+### [WIP] Sample usage
+The final library should be amenable for usage as follows:
+```
+import kumaon
+
+# The following should read paracrawl data and write to LOCAL_PATH for specified langauges
+ds_paracrawl_hf = kumaon.ParallelTextReader( data_key='para_crawl', version_str='RAW', 
+      data_master=None, data_root=LOCAL_PATH, force_write_mode=True, 
+      kwargs={lang_pairs='eng_deu, eng_fra', format='l1l2'} )
+
+# The following should read the local data and write a CLEAN version to disk
+ds_local = kumaon.ParallelTextReader( data_key='local', version_str='CLEAN', 
+      data_master=LOCAL_MASTER_PATH, data_root=LOCAL_PATH, force_write_mode=True, )
+```
+* Prioritise reading HF data because there is enough of it available and we might not need a lot more beyond that. We can get to custom data later.
+     
